@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ToDoController;
+use App\Http\Controllers\siswaController;
 
+use App\Http\Controllers\KelasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +34,7 @@ Route::get('/account/create',
 Route::get('/account/show', 
   [AccountController::class, 'show']
 )->name('showAccount');
+
+Route::resource('student', siswaController::class);
+
+Route::resource('kelas', KelasController::class);
