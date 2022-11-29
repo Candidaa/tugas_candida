@@ -14,8 +14,9 @@ class SiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('account.student.index');
+    {   
+        $dataSiswa = DB::table('siswa')->get();
+        return view('account.student.index', compact('dataSiswa'));
     }
 
     /**
@@ -63,6 +64,9 @@ class SiswaController extends Controller
     public function show($id)
     {
         //
+        $showSiswaById = DB::table('siswa')->where('id', $id)->first();
+        return view('account.student.show', compact('showSiswaById'));
+
     }
 
     /**
@@ -74,6 +78,9 @@ class SiswaController extends Controller
     public function edit($id)
     {
         //
+        $showSiswaById = DB::table('siswa')->where('id', $id)->first(); 
+        // Statement diatas sama dengan  Select * from siswa where id = $id
+        return view('account.student.edit', compact('showSiswaById'));
     }
 
     /**
@@ -86,6 +93,14 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $query = DB::table('siswa')->where('id', $id)
+        ->update([
+            "nomor_induk_siswa" => $request ["nis"],
+            "nama" => $request["nama"],
+            "alamat" => $request["alamat"],
+            "jenis_kelamin" => $request["jenis_kelamin"]
+        ]);
+        return redirect('/student')->with('success', 'Data telah ubah');
     }
 
     /**
@@ -97,5 +112,7 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         //
+        $query = DB::table('siswa')->where('id', $id)->delete();
+        return redirect('/student');
     }
 }
